@@ -9,6 +9,9 @@ import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateSerializer;
 import java.io.Serializable;
 import java.time.LocalDate;
 
+/**
+ *  Mortgage Entity
+ */
 public class MortgageForm implements Serializable {
 
     private static final long serialVersionUID = 1L;

@@ -2,6 +2,7 @@ package com.barclays.mortgage.model;
 
 import java.util.List;
 
+
 public class Mortgagelist {
 
     private List<MortgageForm> mortgageFormList;
