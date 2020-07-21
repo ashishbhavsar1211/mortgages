@@ -28,6 +28,8 @@ dependencies {
 
 	compile "com.fasterxml.jackson.core:jackson-databind:2.9.7"
 	compile "com.fasterxml.jackson.datatype:jackson-datatype-jsr310:2.9.7"
+	// https://mvnrepository.com/artifact/org.apache.httpcomponents/httpclient
+	compile group: 'org.apache.httpcomponents', name: 'httpclient', version: '4.5'
 }
 
 test {

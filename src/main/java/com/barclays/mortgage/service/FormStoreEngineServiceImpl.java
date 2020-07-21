@@ -8,6 +8,9 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
+import java.util.HashMap;
+import java.util.Map;
+
 @Service
 public class FormStoreEngineServiceImpl implements FormStoreEngineService {
 
@@ -16,10 +19,19 @@ public class FormStoreEngineServiceImpl implements FormStoreEngineService {
     @Value("#{'${datastore.url.fetch}'}")
     private String fetchUrl;
 
+    @Value("#{'${datastore.url.fetchAll}'}")
+    private String fetchAll;
+
+    @Value("#{'${datastore.url.submit}'}")
+    private String submit;
+
+
     @Override
     public MortgageForm getFormData(String mortgageId) {
+        Map<String, String> params = new HashMap<String, String>();
+        params.put("id", mortgageId);
         RestTemplate restTemplate = new RestTemplate();
-        MortgageForm mortgageForm = restTemplate.getForObject(fetchUrl, MortgageForm.class);
+        MortgageForm mortgageForm = restTemplate.getForObject(fetchUrl, MortgageForm.class, params);
         logger.info("Data Stored" + mortgageForm);
         return mortgageForm;
     }
@@ -27,8 +39,8 @@ public class FormStoreEngineServiceImpl implements FormStoreEngineService {
     @Override
     public Mortgagelist getAllForms() {
         RestTemplate restTemplate = new RestTemplate();
-        Mortgagelist listOfMortgages = restTemplate.getForObject("http://localhost:9992/datastore/submit", Mortgagelist.class);
-        logger.info("Data Stored");
+        Mortgagelist listOfMortgages = restTemplate.getForObject(fetchAll, Mortgagelist.class);
+        logger.info("Data fetch " + listOfMortgages.getMortgageFormList());
         return listOfMortgages;
     }
 
@@ -36,7 +48,7 @@ public class FormStoreEngineServiceImpl implements FormStoreEngineService {
     public void addFormData(MortgageForm mortgageForm) {
 
         RestTemplate restTemplate = new RestTemplate();
-        MortgageForm storedData = restTemplate.postForObject("http://localhost:9992/datastore/submit", mortgageForm, MortgageForm.class);
-        logger.info("Data Stored");
+        MortgageForm storedData = restTemplate.postForObject(submit, mortgageForm, MortgageForm.class);
+        logger.info("Data Stored"+ storedData);
     }
 }
