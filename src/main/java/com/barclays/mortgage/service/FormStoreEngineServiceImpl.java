@@ -8,6 +8,9 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
+import javax.net.ssl.HostnameVerifier;
+import javax.net.ssl.HttpsURLConnection;
+import javax.net.ssl.SSLSession;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -39,6 +42,11 @@ public class FormStoreEngineServiceImpl implements FormStoreEngineService {
         Map<String, String> params = new HashMap<String, String>();
         params.put("id", mortgageId);
         RestTemplate restTemplate = new RestTemplate();
+        HttpsURLConnection.setDefaultHostnameVerifier(new HostnameVerifier() {
+            public boolean verify(String hostname, SSLSession session) {
+                return true;
+            }
+        });
         MortgageForm mortgageForm = restTemplate.getForObject(fetchUrl, MortgageForm.class, params);
         logger.info("Data Stored" + mortgageForm);
         return mortgageForm;
