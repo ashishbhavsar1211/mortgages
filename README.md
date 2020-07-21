@@ -1,11 +1,11 @@
 # mortgages
 
-Endpoints details : 
-       1. http://localhost:9991/mortgage/submit
+Endpoints details : <Br>
+       1. http://localhost:9991/mortgage/submit <Br>
        2. http://localhost:9991/mortgage/getMortgage
        
        
-RequestBody Sample: 
+RequestBody Sample: <br>
 {
   "mortgageId": "m2",
   "version": 3,
